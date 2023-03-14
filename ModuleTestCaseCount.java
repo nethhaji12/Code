@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ModuleTestCaseCount {
-    public static File dir = new File("/Users/nethhaj/Downloads/utr_qa_regression_suite.csv");
     public static Integer P0[] = new Integer[100000];
     public static Integer P1[] = new Integer[100000];
     public static Integer P2[] = new Integer[100000];
