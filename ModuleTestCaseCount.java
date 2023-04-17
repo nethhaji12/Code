@@ -21,12 +21,8 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class ModuleTestCaseCount {
-    public static Integer P0[] = new Integer[100000];
-    public static Integer P1[] = new Integer[100000];
-    public static Integer P2[] = new Integer[100000];
-    public static String Appcore[] = new String[100000];
     public static WebDriver driver;
-    public static String mailid, password, url;
+    public static String mailid, password, url,mailid1;
     public static int totalP0 = 0, totalp0auto = 0, totalP1 = 0, totalp1auto = 0, totalP2 = 0, totalp2auto = 0, totalcase = 0;
     public static int prodautoP0 = 0, prodautoP1 = 0, prodautoP2 = 0, appautop0 = 0, appautop1 = 0, appautop2 = 0, indautop0 = 0, indautop1 = 0, indautop2 = 0, stautop0 = 0, stautop1 = 0, stautop2 = 0, pautop0 = 0, pautop1 = 0, pautop2 = 0;
     public static int rtsautop0 = 0, rtsautop1 = 0, rtsautop2 = 0, psautop0 = 0, psautop1 = 0, psautop2 = 0, boomautop0 = 0, boomautop1 = 0, boomautop2 = 0;
@@ -35,10 +31,6 @@ public class ModuleTestCaseCount {
     public static int prodP0 = 0, indP0 = 0, appP0 = 0, stP0 = 0, PP0 = 0, RTSP0 = 0, PSP0 = 0, DP0 = 0, SCCP0 = 0, VSAP0 = 0, BoomP0 = 0;
     public static int prodP1 = 0, indP1 = 0, appP1 = 0, stP1 = 0, PP1 = 0, RTSP1 = 0, PSP1 = 0, DP1 = 0, SCCP1 = 0, VSAP1 = 0, BoomP1 = 0;
     public static int prodP2 = 0, indP2 = 0, appP2 = 0, stP2 = 0, PP2 = 0, RTSP2 = 0, PSP2 = 0, DP2 = 0, SCCP2 = 0, VSAP2 = 0, BoomP2 = 0;
-    public static String s;
-    public static int len;
-    public static String alldata;
-    static String start = "<html>\n" + "<head>\n" + "<style>\n" + "table, th, td {\n" + "  border: 1px solid black;\n" + "  border-collapse: collapse;\n" + "}\n" + "</style>\n" + "</head>\n" + "<body>\n" + "<br> Hi Team, <br><br>Kindly find the Testcase count  below <br><br>";
     static String htmlMsg = "";
 
     public static void main(String[] args) throws InterruptedException, IOException, MessagingException {
@@ -59,6 +51,8 @@ public class ModuleTestCaseCount {
         mailid = input.nextLine();
         System.out.println("Enter the password for login");
         password = input.nextLine();
+        System.out.println("Enter the mailId to whom the email to be sent");
+        mailid1 = input.nextLine();
     }
 
     public static void testSuiteChoose() {
@@ -77,12 +71,12 @@ public class ModuleTestCaseCount {
         options.setAcceptInsecureCerts(true);
         driver = new ChromeDriver(options);
         driver.get(url);
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         driver.findElement(By.xpath("//*[@id=\"name\"]")).sendKeys(mailid);
         driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys(password);
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         driver.findElement(By.xpath("//*[@id=\"button_primary\"]")).click();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         driver.findElement(By.xpath("//*[@id=\"content-header\"]//*[@class=\"dropdownLink link-tooltip\"]")).click();
         driver.findElement(By.xpath("//*[@id=\"exportDropdown\"]/ul/li[5]/a")).click();
         driver.findElement(By.xpath("//*[@id=\"exportCsvColumns_control\"]/div/div[1]/div/a[2]")).click();
@@ -100,8 +94,6 @@ public class ModuleTestCaseCount {
 
         String home = System.getProperty("user.home");
         File dir = new File(home + "/Downloads");
-        //int fl = 0, count = 0;
-        //ArrayList<String> fileContents = new ArrayList<>();
         for (File file : dir.listFiles()) {
             if (file.getName().contains(".csv")) {
                 String s = file.getName();
@@ -117,18 +109,8 @@ public class ModuleTestCaseCount {
                     BufferedReader fileBuff = new BufferedReader(fReader);
                     CSVReader csvReader = new CSVReader(fileBuff);
                     while ((nextRecord = csvReader.readNext()) != null) {
-                        // String temp = nextRecord[2];
-                        // System.out.println(temp);
                         List<String[]> alldata = csvReader.readAll();
                         int j = 1;
-                      /*  int totalP0 = 0, totalp0auto = 0, totalP1 = 0, totalp1auto = 0, totalP2 = 0, totalp2auto = 0, totalcase = 0;
-                        int prodautoP0 = 0, prodautoP1 = 0, prodautoP2 = 0, appautop0 = 0, appautop1 = 0, appautop2 = 0, indautop0 = 0, indautop1 = 0, indautop2 = 0, stautop0 = 0, stautop1 = 0, stautop2 = 0, pautop0 = 0, pautop1 = 0, pautop2 = 0;
-                        int rtsautop0 = 0, rtsautop1 = 0, rtsautop2 = 0, psautop0 = 0, psautop1 = 0, psautop2 = 0, boomautop0 = 0, boomautop1 = 0, boomautop2 = 0;
-                        int dautop0 = 0, dautop1 = 0, dautop2 = 0, vsaautop0 = 0, vsaautop1 = 0, vsaautop2 = 0, sccautop0 = 0, sccautop1 = 0, sccautop2 = 0;
-                        int prodtotal = 0, aptotal = 0, indtotal = 0, stowtotal = 0, picktotal = 0, RTStotal = 0, PStotal = 0, Departtotal = 0, VSAtotal = 0, SCCtotal = 0, URLtotal = 0;
-                        int prodP0 = 0, indP0 = 0, appP0 = 0, stP0 = 0, PP0 = 0, RTSP0 = 0, PSP0 = 0, DP0 = 0, SCCP0 = 0, VSAP0 = 0, BoomP0 = 0;
-                        int prodP1 = 0, indP1 = 0, appP1 = 0, stP1 = 0, PP1 = 0, RTSP1 = 0, PSP1 = 0, DP1 = 0, SCCP1 = 0, VSAP1 = 0, BoomP1 = 0;
-                        int prodP2 = 0, indP2 = 0, appP2 = 0, stP2 = 0, PP2 = 0, RTSP2 = 0, PSP2 = 0, DP2 = 0, SCCP2 = 0, VSAP2 = 0, BoomP2 = 0; */
                         for (int i = 0; i <= len; i++) {
                             if (j < alldata.size()) {
                                 if (alldata.get(j)[3].equals("P0") && alldata.get(j)[4].startsWith("Prod") && alldata.get(j)[2].contains("Yes")) {
@@ -380,9 +362,9 @@ public class ModuleTestCaseCount {
                             totalP0 = prodP0 + indP0 + appP0 + stP0 + PP0 + RTSP0 + PSP0 + DP0 + SCCP0 + VSAP0 + BoomP0;
                             totalP1 = prodP1 + indP1 + appP1 + stP1 + PP1 + RTSP1 + PSP1 + DP1 + SCCP1 + VSAP1 + BoomP1;
                             totalP2 = prodP2 + indP2 + appP2 + stP2 + PP2 + RTSP2 + PSP2 + DP2 + SCCP2 + VSAP2 + BoomP2;
-                            totalp0auto = pautop0 + indautop0 + appautop0 + stautop0 + pautop0 + rtsautop0 + dautop0 + psautop0 + sccautop0 + vsaautop0 + boomautop0;
-                            totalp1auto = pautop1 + indautop1 + appautop1 + stautop1 + pautop1 + rtsautop1 + dautop1 + psautop1 + sccautop1 + vsaautop1 + boomautop1;
-                            totalp2auto = pautop2 + indautop2 + appautop2 + stautop2 + pautop2 + rtsautop2 + dautop2 + psautop2 + sccautop2 + vsaautop2 + boomautop2;
+                            totalp0auto = prodautoP0 + indautop0 + appautop0 + stautop0 + pautop0 + rtsautop0 + dautop0 + psautop0 + sccautop0 + vsaautop0 + boomautop0;
+                            totalp1auto = prodautoP1 + indautop1 + appautop1 + stautop1 + pautop1 + rtsautop1 + dautop1 + psautop1 + sccautop1 + vsaautop1 + boomautop1;
+                            totalp2auto = prodautoP2 + indautop2 + appautop2 + stautop2 + pautop2 + rtsautop2 + dautop2 + psautop2 + sccautop2 + vsaautop2 + boomautop2;
                             totalcase = totalP0 + totalP1 + totalP2;
                         }
                         System.out.println(alldata.get(1231)[4]);
@@ -467,154 +449,6 @@ public class ModuleTestCaseCount {
                         System.out.println("Total P2 :" + totalP2);
                         System.out.println("Total case" + totalcase);
 
-                      /*  htmlMsg = htmlMsg.concat("<table style=\"width:80%\">\n" +
-                                "  <tr bgcolor=\"#25BCF0\">\n" +
-                                "    <th>Module</th>\n" +
-                                "    <th>Total P0</th> \n" +
-                                "    <th>Total P0 Automated</th> \n" +
-                                "    <th>Total P1</th>\n" +
-                                "    <th>Total P1 Automated</th>\n" +
-                                "    <th>Total P2</th>\n" +
-                                "    <th>Total P2 Automated</th>\n" +
-                                "    <th>Total cases</th>\n" +
-                                "    </tr>\n");
-
-                        //values
-                        htmlMsg = htmlMsg.concat(
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Prod validation scenario </td>\n" +
-                                "    <td align=\"center\">" + prodP0 + "</td>\n" +
-                                "    <td align=\"center\">" + prodautoP0 + "</td>\n" +
-                                "    <td align=\"center\">" + prodP1 + "</td>\n" +
-                                "    <td align=\"center\">" + prodautoP1 + "</td>\n" +
-                                "    <td align=\"center\">" + prodP2 + "</td>\n" +
-                                "    <td align=\"center\">" + prodautoP2 + "</td>\n" +
-                                "    <td align=\"center\">" + prodtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> App Core </td>\n" +
-                                "    <td align=\"center\">" + appP0 + "</td>\n" +
-                                "    <td align=\"center\">" + appautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + appP1 + "</td>\n" +
-                                "    <td align=\"center\">" + appautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + appP2 + "</td>\n" +
-                                "    <td align=\"center\">" + appautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + aptotal + "</td>\n" +
-                                "    </tr>\n" +
-
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Induct </td>\n" +
-                                "    <td align=\"center\">" + indP0 + "</td>\n" +
-                                "    <td align=\"center\">" + indautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + indP1 + "</td>\n" +
-                                "    <td align=\"center\">" + indautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + indP2 + "</td>\n" +
-                                "    <td align=\"center\">" + indautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + indtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Stow </td>\n" +
-                                "    <td align=\"center\">" + stP0 + "</td>\n" +
-                                "    <td align=\"center\">" + stautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + stP1 + "</td>\n" +
-                                "    <td align=\"center\">" + stautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + stP2 + "</td>\n" +
-                                "    <td align=\"center\">" + stautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + stowtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Pick and Stage </td>\n" +
-                                "    <td align=\"center\">" + PP0 + "</td>\n" +
-                                "    <td align=\"center\">" + pautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + PP1 + "</td>\n" +
-                                "    <td align=\"center\">" + pautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + PP2 + "</td>\n" +
-                                "    <td align=\"center\">" + pautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + picktotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Receive </td>\n" +
-                                "    <td align=\"center\">" + RTSP0 + "</td>\n" +
-                                "    <td align=\"center\">" + rtsautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + RTSP1 + "</td>\n" +
-                                "    <td align=\"center\">" + rtsautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + RTSP2 + "</td>\n" +
-                                "    <td align=\"center\">" + rtsautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + RTStotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Depart </td>\n" +
-                                "    <td align=\"center\">" + DP0 + "</td>\n" +
-                                "    <td align=\"center\">" + dautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + DP1 + "</td>\n" +
-                                "    <td align=\"center\">" + dautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + DP2 + "</td>\n" +
-                                "    <td align=\"center\">" + dautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + Departtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Problem solve </td>\n" +
-                                "    <td align=\"center\">" + PSP0 + "</td>\n" +
-                                "    <td align=\"center\">" + psautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + PSP1 + "</td>\n" +
-                                "    <td align=\"center\">" + psautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + PSP2 + "</td>\n" +
-                                "    <td align=\"center\">" + psautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + PStotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> Boomerang/URL </td>\n" +
-                                "    <td align=\"center\">" + BoomP0 + "</td>\n" +
-                                "    <td align=\"center\">" + boomautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + BoomP1 + "</td>\n" +
-                                "    <td align=\"center\">" + boomautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + BoomP2 + "</td>\n" +
-                                "    <td align=\"center\">" + boomautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + URLtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> SCC </td>\n" +
-                                "    <td align=\"center\">" + SCCP0 + "</td>\n" +
-                                "    <td align=\"center\">" + sccautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + SCCP1 + "</td>\n" +
-                                "    <td align=\"center\">" + sccautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + SCCP2 + "</td>\n" +
-                                "    <td align=\"center\">" + sccautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + SCCtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\"> VSA </td>\n" +
-                                "    <td align=\"center\">" + VSAP0 + "</td>\n" +
-                                "    <td align=\"center\">" + vsaautop0 + "</td>\n" +
-                                "    <td align=\"center\">" + VSAP1 + "</td>\n" +
-                                "    <td align=\"center\">" + vsaautop1 + "</td>\n" +
-                                "    <td align=\"center\">" + VSAP2 + "</td>\n" +
-                                "    <td align=\"center\">" + vsaautop2 + "</td>\n" +
-                                "    <td align=\"center\">" + VSAtotal + "</td>\n" +
-                                "    </tr>\n" +
-
-                                "    <tr>\n" +
-                                "    <td align=\"center\">  </td>\n" +
-                                "    <td align=\"center\">" + totalP0 + "</td>\n" +
-                                "    <td align=\"center\">" + totalp0auto + "</td>\n" +
-                                "    <td align=\"center\">" + totalP1 + "</td>\n" +
-                                "    <td align=\"center\">" + totalp1auto + "</td>\n" +
-                                "    <td align=\"center\">" + totalP2 + "</td>\n" +
-                                "    <td align=\"center\">" + totalp2auto + "</td>\n" +
-                                "    <td align=\"center\">" + totalcase + "</td>\n" +
-                                "    </tr>\n"); */
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -639,20 +473,13 @@ public class ModuleTestCaseCount {
         message.setFrom(new InternetAddress(mailid));
 
         // Recipient's email ID needs to be mentioned.
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("nethhaj@amazon.com"));
-        //message.addRecipient(Message.RecipientType.CC, new InternetAddress("nethhaj@amazon.com"));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailid1));
+        message.addRecipient(Message.RecipientType.CC, new InternetAddress("nethhaj@amazon.com"));
 
 
         // Set Subject: header field
         message.setSubject("Testcase count");
 
-        // Now set the actual message
-        //message.setText("This is actual message");
-
-
-       /* msg = start + msg +
-                "</body>\n" +
-                "</html>"; */
 
         msg = "<html>\n" +
                 "<head>\n" +
@@ -828,7 +655,6 @@ public class ModuleTestCaseCount {
 
 
     public static void del() {
-        //String home = System.getProperty("user.home");
         File directory = new File("/Users/nethhaj/Downloads");
         for (File file : directory.listFiles()) {
             if (file.getName().contains(".csv")) {
