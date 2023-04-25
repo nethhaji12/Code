@@ -22,8 +22,8 @@ import java.util.Scanner;
 
 public class ModuleTestCaseCount {
     public static WebDriver driver;
-    public static String mailid, password, url,mailid1;
-    public static int totalP0 = 0, totalp0auto = 0, totalP1 = 0, totalp1auto = 0, totalP2 = 0, totalp2auto = 0, totalcase = 0;
+    public static String mailid, password, url, mailid1;
+    public static int totalP0 = 0, totalp0auto = 0, totalP1 = 0, totalp1auto = 0, totalP2 = 0, totalp2auto = 0, totalcase = 0, totalautomatedcase = 0;
     public static int prodautoP0 = 0, prodautoP1 = 0, prodautoP2 = 0, appautop0 = 0, appautop1 = 0, appautop2 = 0, indautop0 = 0, indautop1 = 0, indautop2 = 0, stautop0 = 0, stautop1 = 0, stautop2 = 0, pautop0 = 0, pautop1 = 0, pautop2 = 0;
     public static int rtsautop0 = 0, rtsautop1 = 0, rtsautop2 = 0, psautop0 = 0, psautop1 = 0, psautop2 = 0, boomautop0 = 0, boomautop1 = 0, boomautop2 = 0;
     public static int dautop0 = 0, dautop1 = 0, dautop2 = 0, vsaautop0 = 0, vsaautop1 = 0, vsaautop2 = 0, sccautop0 = 0, sccautop1 = 0, sccautop2 = 0;
@@ -31,6 +31,8 @@ public class ModuleTestCaseCount {
     public static int prodP0 = 0, indP0 = 0, appP0 = 0, stP0 = 0, PP0 = 0, RTSP0 = 0, PSP0 = 0, DP0 = 0, SCCP0 = 0, VSAP0 = 0, BoomP0 = 0;
     public static int prodP1 = 0, indP1 = 0, appP1 = 0, stP1 = 0, PP1 = 0, RTSP1 = 0, PSP1 = 0, DP1 = 0, SCCP1 = 0, VSAP1 = 0, BoomP1 = 0;
     public static int prodP2 = 0, indP2 = 0, appP2 = 0, stP2 = 0, PP2 = 0, RTSP2 = 0, PSP2 = 0, DP2 = 0, SCCP2 = 0, VSAP2 = 0, BoomP2 = 0;
+
+    public static int totalprodautomated = 0, totalappauto = 0, totalindauto = 0, totalstowauto = 0, totalpickauto = 0, totalrtsauto = 0, totaldepartauto = 0, totalPSauto = 0, totalSCCauto = 0, totalvsaauto = 0, totalURLauto = 0;
     static String htmlMsg = "";
 
     public static void main(String[] args) throws InterruptedException, IOException, MessagingException {
@@ -103,12 +105,11 @@ public class ModuleTestCaseCount {
                 int len = lnr.getLineNumber();
                 System.out.println(len); //Add 1 because line index starts at 0
                 lnr.close();
-                String[] nextRecord;
                 try {
                     FileReader fReader = new FileReader(file);
                     BufferedReader fileBuff = new BufferedReader(fReader);
                     CSVReader csvReader = new CSVReader(fileBuff);
-                    while ((nextRecord = csvReader.readNext()) != null) {
+                    while (csvReader.readNext() != null) {
                         List<String[]> alldata = csvReader.readAll();
                         int j = 1;
                         for (int i = 0; i <= len; i++) {
@@ -141,18 +142,29 @@ public class ModuleTestCaseCount {
                                 } else if (alldata.get(j)[3].equals("P0") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("No")) {
                                     appP0++;
                                     j++;
-                                } else if (alldata.get(j)[3].equals("P1") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("Yes")) {
+                                }else if (alldata.get(j)[3].equals("P0") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("NA") || alldata.get(j)[2].contains("TBD") ) {
+                                    appP0++;
+                                    j++;
+                                }
+                                else if (alldata.get(j)[3].equals("P1") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("Yes")) {
                                     appP1++;
                                     appautop1++;
                                     j++;
                                 } else if (alldata.get(j)[3].equals("P1") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("No")) {
                                     appP1++;
                                     j++;
-                                } else if (alldata.get(j)[3].equals("P2") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("Yes")) {
+                                } else if (alldata.get(j)[3].equals("P1") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("NA") || alldata.get(j)[2].contains("TBD") ) {
+                                    appP1++;
+                                    j++;
+                                }
+                                else if (alldata.get(j)[3].equals("P2") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("Yes")) {
                                     appP2++;
                                     appautop2++;
                                     j++;
                                 } else if (alldata.get(j)[3].equals("P2") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("No")) {
+                                    appP2++;
+                                    j++;
+                                } else if (alldata.get(j)[3].equals("P2") && alldata.get(j)[4].startsWith("APP") && alldata.get(j)[2].contains("NA") || alldata.get(j)[2].contains("TBD") ) {
                                     appP2++;
                                     j++;
                                 } else if (alldata.get(j)[3].equals("P0") && alldata.get(j)[4].startsWith("Induct") && alldata.get(j)[2].contains("Yes")) {
@@ -366,8 +378,19 @@ public class ModuleTestCaseCount {
                             totalp1auto = prodautoP1 + indautop1 + appautop1 + stautop1 + pautop1 + rtsautop1 + dautop1 + psautop1 + sccautop1 + vsaautop1 + boomautop1;
                             totalp2auto = prodautoP2 + indautop2 + appautop2 + stautop2 + pautop2 + rtsautop2 + dautop2 + psautop2 + sccautop2 + vsaautop2 + boomautop2;
                             totalcase = totalP0 + totalP1 + totalP2;
+                            totalprodautomated = prodautoP0 + prodautoP1 + prodautoP2;
+                            totalappauto = appautop0 + appautop1 + appautop2;
+                            totalindauto = indautop0 + indautop1 + indautop2;
+                            totalstowauto = stautop0 + stautop1 + stautop2;
+                            totalpickauto = pautop0 + pautop1 + pautop2;
+                            totalrtsauto = rtsautop0 + rtsautop1 + rtsautop2;
+                            totaldepartauto = dautop0 + dautop1 + dautop2;
+                            totalPSauto = psautop0 + psautop1 + psautop2;
+                            totalSCCauto = sccautop0 + sccautop1 + sccautop2;
+                            totalvsaauto = vsaautop0 + vsaautop1 + vsaautop2;
+                            totalURLauto = boomautop0 + boomautop1 + boomautop2;
+                            totalautomatedcase = totalprodautomated + totalappauto + totalindauto + totalstowauto + totalpickauto + totalrtsauto + totaldepartauto + totalPSauto + totalURLauto + totalSCCauto + totalvsaauto;
                         }
-                        System.out.println(alldata.get(1231)[4]);
                         System.out.println("prod P0 :" + prodP0);
                         System.out.println("Automated Prod P0:" + prodautoP0);
                         System.out.println("prod P1 :" + prodP1);
@@ -447,6 +470,9 @@ public class ModuleTestCaseCount {
                         System.out.println("Total P0 :" + totalP0);
                         System.out.println("Total P1 :" + totalP1);
                         System.out.println("Total P2 :" + totalP2);
+                        System.out.println("Total P0 automated :" + totalp0auto);
+                        System.out.println("Total P1 automated:" + totalp1auto);
+                        System.out.println("Total P2 automated:" + totalp2auto);
                         System.out.println("Total case" + totalcase);
 
                     }
@@ -499,6 +525,7 @@ public class ModuleTestCaseCount {
                 "    <th>Total P2</th>\n" +
                 "    <th>Total P2 Automated</th>\n" +
                 "    <th>Total cases</th>\n" +
+                "    <th>Total automated cases</th>\n" +
                 "    </tr>\n" +
 
                 //values
@@ -512,6 +539,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + prodP2 + "</td>\n" +
                 "    <td align=\"center\">" + prodautoP2 + "</td>\n" +
                 "    <td align=\"center\">" + prodtotal + "</td>\n" +
+                "    <td align=\"center\">" + totalprodautomated + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -523,6 +551,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + appP2 + "</td>\n" +
                 "    <td align=\"center\">" + appautop2 + "</td>\n" +
                 "    <td align=\"center\">" + aptotal + "</td>\n" +
+                "    <td align=\"center\">" + totalappauto + "</td>\n" +
                 "    </tr>\n" +
 
 
@@ -535,6 +564,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + indP2 + "</td>\n" +
                 "    <td align=\"center\">" + indautop2 + "</td>\n" +
                 "    <td align=\"center\">" + indtotal + "</td>\n" +
+                "    <td align=\"center\">" + totalindauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -546,6 +576,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + stP2 + "</td>\n" +
                 "    <td align=\"center\">" + stautop2 + "</td>\n" +
                 "    <td align=\"center\">" + stowtotal + "</td>\n" +
+                "    <td align=\"center\">" + totalstowauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -557,6 +588,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + PP2 + "</td>\n" +
                 "    <td align=\"center\">" + pautop2 + "</td>\n" +
                 "    <td align=\"center\">" + picktotal + "</td>\n" +
+                "    <td align=\"center\">" + totalpickauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -568,6 +600,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + RTSP2 + "</td>\n" +
                 "    <td align=\"center\">" + rtsautop2 + "</td>\n" +
                 "    <td align=\"center\">" + RTStotal + "</td>\n" +
+                "    <td align=\"center\">" + totalrtsauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -579,6 +612,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + DP2 + "</td>\n" +
                 "    <td align=\"center\">" + dautop2 + "</td>\n" +
                 "    <td align=\"center\">" + Departtotal + "</td>\n" +
+                "    <td align=\"center\">" + totaldepartauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -590,6 +624,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + PSP2 + "</td>\n" +
                 "    <td align=\"center\">" + psautop2 + "</td>\n" +
                 "    <td align=\"center\">" + PStotal + "</td>\n" +
+                "    <td align=\"center\">" + totalPSauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -601,6 +636,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + BoomP2 + "</td>\n" +
                 "    <td align=\"center\">" + boomautop2 + "</td>\n" +
                 "    <td align=\"center\">" + URLtotal + "</td>\n" +
+                "    <td align=\"center\">" + totalURLauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -612,6 +648,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + SCCP2 + "</td>\n" +
                 "    <td align=\"center\">" + sccautop2 + "</td>\n" +
                 "    <td align=\"center\">" + SCCtotal + "</td>\n" +
+                "    <td align=\"center\">" + totalSCCauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -623,6 +660,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + VSAP2 + "</td>\n" +
                 "    <td align=\"center\">" + vsaautop2 + "</td>\n" +
                 "    <td align=\"center\">" + VSAtotal + "</td>\n" +
+                "    <td align=\"center\">" + totalvsaauto + "</td>\n" +
                 "    </tr>\n" +
 
                 "    <tr>\n" +
@@ -634,6 +672,7 @@ public class ModuleTestCaseCount {
                 "    <td align=\"center\">" + totalP2 + "</td>\n" +
                 "    <td align=\"center\">" + totalp2auto + "</td>\n" +
                 "    <td align=\"center\">" + totalcase + "</td>\n" +
+                "    <td align=\"center\">" + totalautomatedcase + "</td>\n" +
                 "    </tr>\n" +
                 "</table>\n" +
                 "<br><br>Thanks\n" +
